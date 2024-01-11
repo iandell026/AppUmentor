@@ -17,20 +17,22 @@
             <div class="col-sm-12 mt-5 mb-3">
             <h3>Lista de Usuários</h3>
             <div id="dadosCadastro">
-              <div class="row">
-                <div class="col-md-4 mb-3">
-                    <label for="inputNome" class="form-label">Nome</label>
-                    <input type="text" class="form-control" id="inputNome" name="nome">
+              <form id="formUsuario">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="nome" class="form-label">Nome</label>
+                        <input type="text" class="form-control" id="nome" name="nome">
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email">
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="dataAdmissao" class="form-label">Data de Admissão</label>
+                        <input type="date" class="form-control" id="dataAdmissao" name="dataAdmissao">
+                    </div>
                 </div>
-                <div class="col-md-4 mb-3">
-                    <label for="inputEmail" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="inputEmail" name="email">
-                </div>
-                <div class="col-md-4 mb-3">
-                    <label for="inputDataAdmissao" class="form-label">Data de Admissão</label>
-                    <input type="date" class="form-control" id="inputDataAdmissao" name="dataAdmissao">
-                </div>
-              </div>
+              </form>
               <button type="button" class="btn btn-primary mb-2" id="AddUsuario">Adicionar Usuário</button>
             </div>
 
@@ -68,12 +70,73 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
     
   </body>
 </html>
 
 <script>
   
+  $("#formUsuario").validate({
+    rules: {
+        nome: {
+          required: true,
+          minlength: 3,
+          maxlength: 50
+        },
+        email: {
+          required: true,
+          email: true
+        },
+        dataAdmissao: {
+          required: true,
+          date: true
+        }
+    },
+    messages: {
+        nome: {
+          required: "Por favor, informe o nome",
+          minlength: "O nome deve ter pelo menos 3 caracteres",
+          maxlength: "O nome não deve ter mais de 50 caracteres"
+        },
+        email: {
+          required: "Por favor, informe o email",
+          email: "Por favor, informe um email válido"
+        },
+        dataAdmissao: {
+          required: "Por favor, informe a data de admissão",
+          date: "Por favor, informe uma data válida"
+        }
+    },
+
+    // Estilização das validações com SweetAlert2
+
+    errorPlacement: function(error, element) {
+      // Remove qualquer alerta existente antes de exibir um novo
+      Swal.close();
+
+      Swal.fire({
+          title: 'Erro de Validação',
+          text: error.text(),
+          icon: 'error',
+          confirmButtonText: 'Ok'
+      });
+    },
+    highlight: function(element, errorClass, validClass) {
+      // Adiciona classe de erro ao elemento do formulário
+      $(element).addClass("is-invalid");
+    },
+    unhighlight: function(element, errorClass, validClass) {
+      // Remove classe de erro do elemento do formulário
+      $(element).removeClass("is-invalid");
+    },
+
+    // Desativa a validação automática
+    onfocusout: false,
+    onkeyup: false,
+    onclick: false
+  });
+
   function atualizarTabela(id) {
     $.ajax({
       url: '<?php echo base_url().'listarPorId/' ?>' + id,
@@ -90,57 +153,67 @@
 
   $(document).ready(function() {
     $('#AddUsuario').click(function() {
-      
-      let nomeUsuario = $('#inputNome').val();
-      let emailUsuario = $('#inputEmail').val();
-      let dataAdmissaoUsuario = $('#inputDataAdmissao').val();
 
-      let dados = {
-        Nome: nomeUsuario,
-        Email: emailUsuario,
-        DataAdmissao: dataAdmissaoUsuario
-      };
+      if ($("#formUsuario").valid()) {
 
-      let url = '<?php echo base_url().'inserir' ?>';
-      
-      $.ajax({
-        url: url,
-        method: 'POST',
-        data: dados,
-        success: function(response) {
+        let nomeUsuario = $('#nome').val();
+        let emailUsuario = $('#email').val();
+        let dataAdmissaoUsuario = $('#dataAdmissao').val();
 
-          let msg = response['mensagem'];
+        let dados = {
+          Nome: nomeUsuario,
+          Email: emailUsuario,
+          DataAdmissao: dataAdmissaoUsuario
+        };
 
-          if(response['sucesso'] == true){
+        let url = '<?php echo base_url().'inserir' ?>';
+        
+        $.ajax({
+          url: url,
+          method: 'POST',
+          data: dados,
+          success: function(response) {
+
+            let msg = response['mensagem'];
+
+            if(response['sucesso'] == true){
+
+              Swal.fire({
+                title: "Sucesso!",
+                text: msg,
+                icon: "success"
+              });
+
+              let id = response['id'];
+
+              // Atualiza a tabela com o registro inserido
+              atualizarTabela(id);
+
+              // Limpa os campos do formulário
+              $("#formUsuario")[0].reset();
+
+            }else{
+              
+              Swal.fire({
+                title: "Falha!",
+                text: msg,
+                icon: "error"
+              });
+            }
+
+          },
+          error: function (xhr) {
+
             Swal.fire({
-              title: "Sucesso!",
-              text: msg,
-              icon: "success"
-            });
-
-            let id = response['id'];
-
-            //Chama a função para atualizar a tabela com o registro inserido
-            atualizarTabela(id);
-          }else{
-            Swal.fire({
-              title: "Falha!",
-              text: msg,
+              title: "Erro na requisição Ajax!",
+              text: xhr.status + " " + xhr.statusText,
               icon: "error"
             });
+
           }
-
-        },
-        error: function (xhr) {
-
-          Swal.fire({
-            title: "Erro na requisição Ajax!",
-            text: xhr.status + " " + xhr.statusText,
-            icon: "error"
-          });
-          
-        }
-      });
+        });
+      }
+      
     });
   });
 
