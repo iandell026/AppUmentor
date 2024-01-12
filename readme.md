@@ -22,6 +22,10 @@ git clone https://github.com/iandell026/AppUmentor.git
 - Navegue até o arquivo "App/Config/Database.php".
 - Localize a seção das configurações de host, usuario, senha (dentro do array $default)
 - Altere se necessário
+- Script para criação da Database:
+```bash
+CREATE SCHEMA `umentor_db` DEFAULT CHARACTER SET utf8mb4 ;
+```
 
 **3. Instalar Dependências do Composer:**
 ```bash
@@ -33,12 +37,17 @@ composer install
 composer require codeigniter4/spark
 ```
 
-**5. Executar Migrations do banco:**
+**5. Executar Migração da Tabela:**
 ```bash
 php spark migrate
 ```
 
-**6. Iniciar Servidor de Desenvolvimento:**
+**6. Executar o Seeder:**
+```bash
+php spark db:seed DadosUsuarios
+```
+
+**7. Iniciar Servidor de Desenvolvimento:**
 ```bash
 php spark serve
 ```
@@ -48,7 +57,7 @@ Estrutura do projeto é organizada em padrão MVC através do CodeIgniter 4. Ond
 
 ## Uso
 1. **Base de dados para teste** 
-- Para importar dados fictícios no banco, basta realizar a migração com o spark, conforme o passo **5** anterior.
+- Para importar os dados fictícios no banco, basta realizar a migração e seed dos dados com o spark, conforme os passos anteriores.
 2. **Interação no sistema** 
 - O projeto possui 2 telas:
 - Na principal é exibida a tabela com os dados dos usuários, sendo possível adicionar em tempo real novos registros, ou excluir os existentes.
