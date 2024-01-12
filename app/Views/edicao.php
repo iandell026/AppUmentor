@@ -15,7 +15,7 @@
 <body>
     <div class="jumbotron">
         <div class="container bg-light border rounded-3 mt-3">
-            <h1 class="text-center">Controle de Usuários uMentor</h1>
+            <h1 class="text-center display-4">Controle de Usuários uMentor</h1>
 
             <div class="col-sm-12 mt-5 mb-3">
                 <h3>Editar Usuário</h3>
