@@ -13,49 +13,50 @@
 </head>
 
 <body>
-    <div class="container">
-        <h1 class="text-center">Controle de Usuários uMentor</h1>
+    <div class="jumbotron">
+        <div class="container bg-light border rounded-3 mt-3">
+            <h1 class="text-center">Controle de Usuários uMentor</h1>
 
-        <div class="col-sm-12 mt-5 mb-3">
-            <h3>Editar Usuário</h3>
+            <div class="col-sm-12 mt-5 mb-3">
+                <h3>Editar Usuário</h3>
 
-            <div id="dadosCadastro">
-                <form id="formUsuario">
-                    <div class="row">
-                        <?php foreach ($dados as $k) : ?>
-                            <div class="col-md-1 mb-3">
-                                <label for="nome" class="form-label">ID</label>
-                                <input type="text" class="form-control" id="id" name="id" value="<?= $k->ID ?>" disabled readonly>
-                            </div>
+                <div id="dadosCadastro">
+                    <form id="formUsuario">
+                        <div class="row">
+                            <?php foreach ($dados as $k) : ?>
+                                <div class="col-md-1 mb-3">
+                                    <label for="nome" class="form-label">ID</label>
+                                    <input type="text" class="form-control" id="id" name="id" value="<?= $k->ID ?>" disabled readonly>
+                                </div>
 
-                            <div class="col-md-4 mb-3">
-                                <label for="nome" class="form-label">Nome</label>
-                                <input type="text" class="form-control" id="nome" name="nome" value="<?= $k->Nome ?>">
-                            </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="nome" class="form-label">Nome</label>
+                                    <input type="text" class="form-control" id="nome" name="nome" value="<?= $k->Nome ?>">
+                                </div>
 
-                            <div class="col-md-4 mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" value="<?= $k->Email ?>">
-                            </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" value="<?= $k->Email ?>">
+                                </div>
 
-                            <div class="col-md-2 mb-3">
-                                <label for="dataAdmissao" class="form-label">Data de Admissão</label>
-                                <input type="date" class="form-control" id="dataAdmissao" name="dataAdmissao" value="<?= $k->DataAdmissao ?>">
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                </form>
+                                <div class="col-md-2 mb-3">
+                                    <label for="dataAdmissao" class="form-label">Data de Admissão</label>
+                                    <input type="date" class="form-control" id="dataAdmissao" name="dataAdmissao" value="<?= $k->DataAdmissao ?>">
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </form>
 
-                <button type="button" class="btn btn-primary" id="confirmar">Confirmar Alteração</button>
-                <a class="btn btn-secondary" href="<?= base_url() ?>">Voltar</a>
+                    <button type="button" class="btn btn-outline-primary" id="confirmar">Confirmar Alteração</button>
+                    <a class="btn btn-secondary" href="<?= base_url() ?>">Voltar</a>
+                </div>
             </div>
         </div>
-    </div>
 
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
 
 </body>
 
@@ -160,7 +161,7 @@
 
                             setTimeout(function() {
                                 window.location.replace(paginaPrincipal);
-                            }, 5000);
+                            }, 3500);
                         } else {
                             Swal.fire({
                                 title: "Falha!",

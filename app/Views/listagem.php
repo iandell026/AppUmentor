@@ -13,64 +13,72 @@
 </head>
 
 <body>
-  <div class="container">
-    <h1 class="text-center">Controle de Usuários uMentor</h1>
-    <div class="row">
-      <div class="col-sm-12 mt-5 mb-3">
-        <h3>Lista de Usuários</h3>
-        <div id="dadosCadastro">
-          <form id="formUsuario">
-            <div class="row">
-              <div class="col-md-4 mb-3">
-                <label for="nome" class="form-label">Nome</label>
-                <input type="text" class="form-control" id="nome" name="nome">
+  <div class="jumbotron">
+    <div class="container bg-light border rounded-3 mt-3">
+      <h1 class="text-center display-4">Controle de Usuários uMentor</h1>
+      <div class="row">
+        <div class="col-sm-12 mt-5 mb-3">
+          <h3>Lista de Usuários</h3>
+          <div id="dadosCadastro">
+            <form id="formUsuario">
+              <div class="row">
+                <div class="col-md-4 mb-3">
+                  <label for="nome" class="form-label">Nome</label>
+                  <input type="text" class="form-control" id="nome" name="nome">
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input type="email" class="form-control" id="email" name="email">
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label for="dataAdmissao" class="form-label">Data de Admissão</label>
+                  <input type="date" class="form-control" id="dataAdmissao" name="dataAdmissao">
+                </div>
               </div>
-              <div class="col-md-4 mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email">
-              </div>
-              <div class="col-md-4 mb-3">
-                <label for="dataAdmissao" class="form-label">Data de Admissão</label>
-                <input type="date" class="form-control" id="dataAdmissao" name="dataAdmissao">
-              </div>
-            </div>
-          </form>
-          <button type="button" class="btn btn-primary mb-2" id="adicionarUsuario">Adicionar Usuário</button>
-        </div>
+            </form>
+            <button type="button" class="btn btn-primary mb-2" id="adicionarUsuario">Adicionar Usuário</button>
+          </div>
 
-      </div>
-      <div class="table table-responsive">
-        <table class="table table-hover table-bordered" id="tabelaUsuarios">
-          <thead class="table-dark">
-            <tr>
-              <th>ID</th>
-              <th>Nome</th>
-              <th>E-mail</th>
-              <th>Data de Admissão</th>
-              <th>Data de Inserção</th>
-              <th>Data de Atualização</th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php foreach ($dados as $k) : ?>
+        </div>
+        <div class="table table-responsive">
+          <table class="table table-hover table-bordered" id="tabelaUsuarios">
+            <thead class="table-dark">
               <tr>
-                <td><?= $k->ID ?></td>
-                <td><?= $k->Nome ?></td>
-                <td><?= $k->Email ?></td>
-                <td><?= $k->DataAdmissaoFormat ?></td>
-                <td><?= isset($k->CriadoEm) ? $k->CriadoEm : '-' ?></td>
-                <td><?= isset($k->AtualizadoEm) ? $k->AtualizadoEm : '-' ?></td>
-                <td><a class="btn btn-info btn-sm btn-glow" href="<?= base_url() . 'editar/' . $k->ID ?>">Editar</a></td>
-                <td><button type="button" class="btn btn-outline-danger btn-sm btn-glow excluirUsuario" id=<?= $k->ID ?>>Excluir</button></td>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Data de Admissão</th>
+                <th>Data de Inserção</th>
+                <th>Data de Atualização</th>
+                <th></th>
+                <th></th>
               </tr>
-            <?php endforeach; ?>
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              <?php foreach ($dados as $k) : ?>
+                <tr>
+                  <td><?= $k->ID ?></td>
+                  <td><?= $k->Nome ?></td>
+                  <td><?= $k->Email ?></td>
+                  <td><?= $k->DataAdmissaoFormat ?></td>
+                  <td><?= isset($k->CriadoEm) ? $k->CriadoEm : '-' ?></td>
+                  <td><?= isset($k->AtualizadoEm) ? $k->AtualizadoEm : '-' ?></td>
+                  <td><a class="btn btn-info" href="<?= base_url() . 'editar/' . $k->ID ?>">Editar</a></td>
+                  <td><button type="button" class="btn btn-outline-danger excluirUsuario" id=<?= $k->ID ?>>Excluir</button></td>
+                </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
+
+  <footer class="footer mt-auto py-3 bg-light">
+    <div class="container">
+      <span class="text-muted">Desenvolvido por Iandell L.</span>
+    </div>
+  </footer>
 
   <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
@@ -159,8 +167,8 @@
         novaLinha.append('<td>-</td>');
 
         // Adiciona os botões de editar e excluir
-        novaLinha.append('<td><a class="btn btn-info btn-sm" href="<?= base_url() . 'editar/' ?>' + dados.ID + '">Editar</a></td>');
-        novaLinha.append('<td><button type="button" class="btn btn-outline-danger btn-sm excluirUsuario" id=' + dados.ID + '>Excluir</button></td>');
+        novaLinha.append('<td><a class="btn btn-info" href="<?= base_url() . 'editar/' ?>' + dados.ID + '">Editar</a></td>');
+        novaLinha.append('<td><button type="button" class="btn btn-outline-danger excluirUsuario" id=' + dados.ID + '>Excluir</button></td>');
 
         // Adiciona a nova linha à tabela
         $('#tabelaUsuarios tbody').append(novaLinha);
@@ -294,34 +302,34 @@
     });
 
     function carregarDadosDaTabela() {
-        $.ajax({
-          url: '<?= base_url() . 'listarDados' ?>',
-          method: 'GET',
-          dataType: 'json',
-          success: function(response) {
-            // Limpa o corpo da tabela
-            $('#tabelaUsuarios tbody').empty();
+      $.ajax({
+        url: '<?= base_url() . 'listarDados' ?>',
+        method: 'GET',
+        dataType: 'json',
+        success: function(response) {
+          // Limpa o corpo da tabela
+          $('#tabelaUsuarios tbody').empty();
 
-            // Itera sobre os dados e adiciona as linhas à tabela
-            $.each(response, function(index, dados) {
+          // Itera sobre os dados e adiciona as linhas à tabela
+          $.each(response, function(index, dados) {
 
-              // Adiciona uma nova linha à tabela com os dados formatados
-              $('#tabelaUsuarios tbody').append('<tr>' +
-                '<td>' + dados.ID + '</td>' +
-                '<td>' + dados.Nome + '</td>' +
-                '<td>' + dados.Email + '</td>' +
-                '<td>' + dados.DataAdmissaoFormat + '</td>' +
-                '<td>' + (dados.CriadoEm ? dados.CriadoEm : '-') + '</td>' +
-                '<td>' + (dados.AtualizadoEm ? dados.AtualizadoEm : '-') + '</td>' +
-                '<td><a class="btn btn-info btn-sm" href="<?= base_url() . 'editar/' ?>' + dados.ID + '">Editar</a></td>' +
-                '<td><button type="button" class="btn btn-outline-danger btn-sm excluirUsuario" id="' + dados.ID + '">Excluir</button></td>' +
-                '</tr>');
-            });
-          },
-          error: function(xhr) {
-            console.error('Erro na requisição AJAX:', xhr.status, xhr.statusText);
-          }
-        });
-      }
+            // Adiciona uma nova linha à tabela com os dados formatados
+            $('#tabelaUsuarios tbody').append('<tr>' +
+              '<td>' + dados.ID + '</td>' +
+              '<td>' + dados.Nome + '</td>' +
+              '<td>' + dados.Email + '</td>' +
+              '<td>' + dados.DataAdmissaoFormat + '</td>' +
+              '<td>' + (dados.CriadoEm ? dados.CriadoEm : '-') + '</td>' +
+              '<td>' + (dados.AtualizadoEm ? dados.AtualizadoEm : '-') + '</td>' +
+              '<td><a class="btn btn-info" href="<?= base_url() . 'editar/' ?>' + dados.ID + '">Editar</a></td>' +
+              '<td><button type="button" class="btn btn-outline-danger excluirUsuario" id="' + dados.ID + '">Excluir</button></td>' +
+              '</tr>');
+          });
+        },
+        error: function(xhr) {
+          console.error('Erro na requisição AJAX:', xhr.status, xhr.statusText);
+        }
+      });
+    }
   });
 </script>
