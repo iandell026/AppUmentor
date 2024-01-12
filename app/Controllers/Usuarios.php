@@ -29,9 +29,9 @@ class Usuarios extends BaseController
         $dataAtual = date('Y-m-d H:i:s');
         
         $dados = [
-            "nome" => $_POST['Nome'],
-            "email" => $_POST['Email'],
-            "dataAdmissao" => $_POST['DataAdmissao'],
+            "nome" => $this->request->getPost('Nome'),
+            "email" => $this->request->getPost('Email'),
+            "dataAdmissao" => $this->request->getPost('DataAdmissao'),
             "criadoEm" => $dataAtual,
         ];
 
@@ -57,8 +57,69 @@ class Usuarios extends BaseController
     public function listarPorId($id)
     {
         $model = new UsuariosModel();
-        $dados = $model->listarUsuariosPorID($id);
+        $dadosPorId = $model->listarUsuarios($id);
         
-        return $this->response->setJSON($dados);
+        return $this->response->setJSON($dadosPorId);
+    }
+
+    public function editar($id)
+    {
+        $model = new UsuariosModel();
+        $dadosParaEdicao  = $model->listarUsuarios($id);
+
+        $data = [
+            "dados" => $dadosParaEdicao 
+        ];
+
+        return view('edicao', $data);
+    }
+
+    public function atualizar($id)
+    {
+        $dataAtual = date('Y-m-d H:i:s');
+
+        $dados = [
+            "nome" => $this->request->getPost('Nome'),
+            "email" => $this->request->getPost('Email'),
+            "dataAdmissao" => $this->request->getPost('DataAdmissao'),
+            "atualizadoEm" => $dataAtual,
+        ];
+
+        $model = new UsuariosModel();
+        $resultadoAtualizacao = $model->atualizar($dados, $id);
+
+        if ($resultadoAtualizacao) {
+            $retorno = [
+                'sucesso' => true,
+                'mensagem' => 'Registro atualizado no sistema.'
+            ];
+        } else {
+            $retorno = [
+                'sucesso' => false,
+                'mensagem' => 'Falha ao alterar usuário.'
+            ];
+        }
+
+        return $this->response->setJSON($retorno);
+    }
+
+    public function excluir($id)
+    {
+        $model = new UsuariosModel();
+        $resultadoExclusao = $model->excluir($id);
+
+        if ($resultadoExclusao) {
+            $retorno = [
+                'sucesso' => true,
+                'mensagem' => 'Usuário excluído com sucesso.'
+            ];
+        } else {
+            $retorno = [
+                'sucesso' => false,
+                'mensagem' => 'Falha ao excluir usuário.'
+            ];
+        }
+
+        return $this->response->setJSON($retorno);
     }
 }
